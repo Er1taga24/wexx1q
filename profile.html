@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="ru"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Профиль — Apex Client</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+    <link href="%D0%9F%D1%80%D0%BE%D1%84%D0%B8%D0%BB%D1%8C%20%E2%80%94%20Apex%20Client_files/css2_n1n0.css" rel="stylesheet">
+    <link rel="stylesheet" href="%D0%9F%D1%80%D0%BE%D1%84%D0%B8%D0%BB%D1%8C%20%E2%80%94%20Apex%20Client_files/all.min_n1n0.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
+        :root {
+            --bg: #0a0a0f; --bg-elevated: #0f0f14; --bg-card: #111118; --bg-card-hover: #16161f;
+            --bg-input: #08080c; --bg-subtle: #15151c; --border: #1a1a24; --border-strong: #252530;
+            --border-subtle: #12121a; --accent: #a855f7; --accent-hover: #9333ea;
+            --accent-soft: rgba(168, 85, 247, 0.1); --accent-border: rgba(168, 85, 247, 0.25);
+            --success: #10b981; --warning: #f59e0b; --error: #ef4444;
+            --text: #e4e4e7; --text-dim: #a1a1aa; --text-faint: #71717a; --text-muted: #52525b; --text-bright: #fafafa;
+            --radius-sm: 6px; --radius: 10px; --radius-lg: 14px; --radius-xl: 18px;
+            --shadow: 0 4px 12px rgba(0,0,0,0.5); --shadow-lg: 0 12px 32px rgba(0,0,0,0.6);
+            --gradient-color: linear-gradient(330deg, #a855f7 0%, #6366f1 100%);
+            --gradient-hover-color: linear-gradient(330deg, #9333ea 0%, #4f46e5 100%);
+        }
+        html, body { width: 100%; min-height: 100vh; font-family: 'Inter', sans-serif; font-size: 14px; background: var(--bg); color: var(--text); line-height: 1.5; }
+        ::selection { background: transparent; }
+        a { text-decoration: none; color: inherit; }
+
+        .bg-fixed { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+        .bg-orb { position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.12; }
+        .bg-orb-1 { width: 600px; height: 600px; background: #a855f7; top: -200px; right: -100px; animation: float1 15s ease-in-out infinite; }
+        .bg-orb-2 { width: 500px; height: 500px; background: #6366f1; bottom: -150px; left: -100px; animation: float2 18s ease-in-out infinite; }
+        @keyframes float1 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-50px,50px); } }
+        @keyframes float2 { 0%,100% { transform: translate(0,0); } 50% { transform: translate(40px,-40px); } }
+
+        .navbar {
+            background: rgba(10,10,15,0.8); backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border); padding: 12px 0; position: sticky; top: 0; z-index: 100;
+        }
+        .navbar .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+        .navbar .brand { font-size: 22px; font-weight: 700; color: var(--text-bright); }
+        .navbar .brand span { color: var(--accent); }
+        .navbar .nav-links { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+        .navbar .nav-links a { color: var(--text-faint); padding: 6px 14px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; transition: all 0.15s; }
+        .navbar .nav-links a:hover { color: var(--text); background: var(--bg-subtle); }
+        .navbar .nav-links a.active { color: var(--text-bright); background: var(--bg-subtle); }
+        .navbar .nav-right { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+        .navbar .nav-right .user-info {
+            display: flex; align-items: center; gap: 8px; padding: 4px 12px 4px 4px; border-radius: var(--radius);
+            background: var(--bg-subtle); border: 1px solid var(--border); cursor: pointer; transition: all 0.15s;
+            color: var(--text-dim); font-size: 13px;
+        }
+        .navbar .nav-right .user-info:hover { border-color: var(--border-strong); background: var(--bg-card-hover); }
+        .navbar .nav-right .user-info .avatar {
+            width: 28px; height: 28px; border-radius: 50%; background: var(--accent-soft);
+            display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--accent); overflow: hidden;
+        }
+        .navbar .nav-right .user-info .avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .navbar .nav-right .user-info .username-text {
+            color: var(--text-bright);
+            font-weight: 500;
+            font-size: 13px;
+        }
+        .navbar .nav-right .logout-btn {
+            color: var(--text-faint); padding: 6px 12px; border-radius: var(--radius-sm); font-size: 13px;
+            transition: all 0.15s; cursor: pointer; background: transparent; border: none; font-family: inherit;
+            display: flex; align-items: center; gap: 6px;
+        }
+        .navbar .nav-right .logout-btn:hover { color: var(--error); background: rgba(239, 68, 68, 0.08); }
+
+        .profile-page { max-width: 1200px; margin: 0 auto; padding: 28px 20px 60px; position: relative; z-index: 1; }
+        .profile-header { margin-bottom: 30px; }
+        .profile-header h3 { font-size: 28px; font-weight: 700; color: var(--text-bright); }
+        .profile-header h3 i { color: var(--accent); margin-right: 8px; }
+
+        .profile-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+        .profile-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px 24px; height: fit-content; }
+        .profile-item {
+            display: flex; justify-content: space-between; align-items: center; padding: 10px 0;
+            border-bottom: 1px solid var(--border-subtle); font-size: 14px;
+        }
+        .profile-item:last-child { border-bottom: none; }
+        .profile-item .label { color: var(--text-faint); display: flex; align-items: center; gap: 8px; }
+        .profile-item .label i { color: var(--accent); width: 18px; text-align: center; }
+        .profile-item .value { color: var(--text-bright); font-weight: 500; font-size: 13px; }
+        .profile-item .value small { color: var(--text-faint); font-weight: 400; }
+
+        .profile-item .btn-gradient-sm {
+            padding: 4px 14px; border-radius: var(--radius); background: var(--gradient-color); color: #fff;
+            border: none; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.15s; font-family: inherit;
+        }
+        .profile-item .btn-gradient-sm:hover { background: var(--gradient-hover-color); transform: scale(0.95); }
+
+        .avatar-upload { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+        .avatar-upload .avatar-preview {
+            width: 50px; height: 50px; border-radius: 50%; overflow: hidden; border: 2px solid var(--accent-border);
+            flex-shrink: 0; background: var(--bg-subtle); display: flex; align-items: center; justify-content: center;
+            font-size: 20px; font-weight: 700; color: var(--accent);
+        }
+        .avatar-upload .avatar-preview img { width: 100%; height: 100%; object-fit: cover; }
+        .avatar-upload input[type="file"] {
+            flex: 1; padding: 6px 8px; background: var(--bg-input); border: 1px solid var(--border);
+            border-radius: var(--radius); color: var(--text); font-size: 12px; font-family: inherit; cursor: pointer;
+        }
+        .avatar-upload input[type="file"]::-webkit-file-upload-button {
+            background: var(--bg-subtle); border: 1px solid var(--border); border-radius: var(--radius-sm);
+            padding: 4px 12px; color: var(--text); font-size: 12px; cursor: pointer;
+        }
+        .avatar-upload .btn-upload {
+            padding: 8px 16px; border-radius: var(--radius); background: var(--gradient-color); color: #fff;
+            border: none; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.15s; font-family: inherit;
+        }
+        .avatar-upload .btn-upload:hover { background: var(--gradient-hover-color); transform: scale(0.95); }
+
+        .quick-actions-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-faint);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+        .profile-buttons {
+            display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px;
+        }
+        .profile-buttons .btn-gradient {
+            padding: 10px 20px; border-radius: var(--radius); background: var(--gradient-color); color: #fff;
+            border: none; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.15s;
+            font-family: inherit; display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
+        }
+        .profile-buttons .btn-gradient:hover { background: var(--gradient-hover-color); transform: scale(0.97); }
+        .profile-buttons .btn-outline {
+            padding: 10px 20px; border-radius: var(--radius); background: transparent; border: 1px solid var(--border);
+            color: var(--text-dim); font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.15s;
+            font-family: inherit; display: inline-flex; align-items: center; gap: 8px;
+        }
+        .profile-buttons .btn-outline:hover { border-color: var(--border-strong); color: var(--text); background: var(--bg-card-hover); }
+        .profile-buttons .btn-admin {
+            padding: 10px 20px; border-radius: var(--radius); background: rgba(168, 85, 247, 0.15);
+            border: 1px solid rgba(168, 85, 247, 0.3); color: var(--accent); font-size: 13px; font-weight: 600;
+            cursor: pointer; transition: all 0.15s; font-family: inherit; display: inline-flex; align-items: center; gap: 8px;
+        }
+        .profile-buttons .btn-admin:hover { background: rgba(168, 85, 247, 0.25); }
+
+        .profile-card .divider { height: 1px; background: var(--border-subtle); margin: 16px 0; }
+
+        .alert {
+            padding: 12px 16px; border-radius: var(--radius); font-size: 13px; margin-bottom: 16px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .alert-success { background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.15); color: var(--success); }
+        .alert-error { background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.15); color: var(--error); }
+        .alert-warning { background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.15); color: var(--warning); }
+
+        /* ===== ОТЗЫВЫ ВНУТРИ БЫСТРЫХ ДЕЙСТВИЙ ===== */
+        .reviews-inline {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-subtle);
+        }
+        .reviews-inline .review-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-bright);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .reviews-inline .review-title i { color: var(--accent); }
+
+        .review-form-inline .stars-input {
+            display: flex; gap: 4px; margin-bottom: 6px; justify-content: center;
+        }
+        .review-form-inline .stars-input button {
+            background: none; border: none; font-size: 20px; color: var(--text-muted);
+            cursor: pointer; transition: all 0.15s; padding: 0 2px;
+        }
+        .review-form-inline .stars-input button.active { color: #f59e0b; }
+        .review-form-inline .stars-input button:hover { color: #f59e0b; }
+        .review-form-inline textarea {
+            width: 100%; padding: 6px 10px; background: var(--bg-input);
+            border: 1px solid var(--border); border-radius: var(--radius-sm);
+            font-size: 12px; color: var(--text-bright); outline: none;
+            font-family: inherit; resize: vertical; min-height: 50px;
+        }
+        .review-form-inline textarea:focus { border-color: var(--accent); }
+        .review-form-inline .rf-actions {
+            display: flex; gap: 6px; margin-top: 6px;
+        }
+        .review-form-inline .rf-actions button {
+            padding: 4px 14px; border-radius: var(--radius-sm); font-size: 11px; font-weight: 600;
+            cursor: pointer; transition: all 0.15s; border: none; font-family: inherit;
+        }
+        .review-form-inline .rf-actions .btn-submit {
+            background: var(--gradient-color); color: #fff;
+        }
+        .review-form-inline .rf-actions .btn-submit:hover { opacity: 0.85; }
+        .review-form-inline .rf-actions .btn-delete {
+            background: rgba(239,68,68,0.15); color: #f87171; border: 1px solid rgba(239,68,68,0.2);
+        }
+        .review-form-inline .rf-actions .btn-delete:hover { background: rgba(239,68,68,0.25); }
+        .review-status-inline {
+            font-size: 10px; text-align: center; margin-top: 4px; color: var(--warning);
+        }
+
+        .review-item-inline {
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-sm);
+            padding: 8px 12px;
+            margin-bottom: 6px;
+        }
+        .review-item-inline:last-child { margin-bottom: 0; }
+        .review-item-inline .r-header {
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;
+        }
+        .review-item-inline .r-header .r-user {
+            display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--text-bright);
+        }
+        .review-item-inline .r-header .r-user .r-avatar {
+            width: 20px; height: 20px; border-radius: 50%; background: var(--accent-soft); overflow: hidden;
+            display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; color: var(--accent);
+        }
+        .review-item-inline .r-header .r-user .r-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .review-item-inline .r-header .r-stars { font-size: 12px; color: #f59e0b; }
+        .review-item-inline .r-header .r-stars .empty { color: var(--text-muted); }
+        .review-item-inline .r-comment { font-size: 12px; color: var(--text-dim); line-height: 1.4; }
+        .review-item-inline .r-date { font-size: 9px; color: var(--text-faint); margin-top: 2px; }
+        .review-empty-inline { text-align: center; color: var(--text-faint); font-size: 12px; padding: 10px 0; }
+
+        /* ===== ЧАТ ===== */
+        .chat-container {
+            margin-top: 20px; background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: var(--radius-lg); padding: 16px 20px;
+        }
+        .chat-container .chat-title {
+            font-size: 14px; font-weight: 600; color: var(--text-bright);
+            margin-bottom: 10px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+        }
+        .chat-container .chat-title i { color: var(--accent); }
+        .chat-messages {
+            max-height: 250px; overflow-y: auto; margin-bottom: 10px; padding-right: 6px;
+        }
+        .chat-message {
+            display: flex; align-items: flex-start; gap: 8px; padding: 6px 10px;
+            margin-bottom: 4px; border-radius: var(--radius-sm);
+            background: var(--bg-subtle); border: 1px solid var(--border-subtle);
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+        .chat-message .msg-avatar {
+            width: 28px; height: 28px; border-radius: 50%; background: var(--accent-soft);
+            display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700;
+            color: var(--accent); overflow: hidden; flex-shrink: 0;
+        }
+        .chat-message .msg-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .chat-message .msg-body { flex: 1; }
+        .chat-message .msg-header { display: flex; align-items: center; gap: 6px; margin-bottom: 1px; flex-wrap: wrap; }
+        .chat-message .msg-header .msg-username { font-weight: 600; font-size: 12px; color: var(--text-bright); }
+        .chat-message .msg-header .msg-username.admin { color: #f87171; }
+        .chat-message .msg-header .msg-role {
+            font-size: 8px; padding: 1px 6px; border-radius: 8px; font-weight: 600;
+        }
+        .chat-message .msg-header .msg-role.admin-role { background: rgba(239,68,68,0.15); color: #f87171; }
+        .chat-message .msg-header .msg-role.user-role { background: var(--bg-subtle); color: var(--text-faint); }
+        .chat-message .msg-header .msg-time { font-size: 9px; color: var(--text-faint); margin-left: auto; }
+        .chat-message .msg-text { font-size: 12px; color: var(--text-dim); line-height: 1.4; word-wrap: break-word; }
+        .chat-input-area { display: flex; gap: 8px; }
+        .chat-input-area input {
+            flex: 1; padding: 8px 12px; background: var(--bg-input); border: 1px solid var(--border);
+            border-radius: var(--radius-sm); font-size: 12px; color: var(--text-bright); outline: none;
+            font-family: inherit; transition: all 0.15s;
+        }
+        .chat-input-area input::placeholder { color: var(--text-muted); }
+        .chat-input-area input:focus { border-color: var(--accent); }
+        .chat-input-area button {
+            padding: 8px 16px; border-radius: var(--radius-sm); background: var(--gradient-color); color: #fff;
+            border: none; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.15s;
+            font-family: inherit; white-space: nowrap;
+        }
+        .chat-input-area button:hover { background: var(--gradient-hover-color); transform: scale(0.97); }
+        .chat-input-area button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .chat-cooldown-warning {
+            font-size: 11px; color: var(--warning); margin-top: 6px; text-align: center; display: none;
+        }
+        .chat-cooldown-warning.active { display: block; }
+
+        /* ===== МОДАЛКИ ===== */
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); z-index: 999;
+            align-items: center; justify-content: center;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-content {
+            background: var(--bg-card); border: 1px solid var(--border-strong); border-radius: var(--radius-xl);
+            padding: 32px; max-width: 420px; width: 100%; box-shadow: var(--shadow-lg); max-height: 80vh; overflow-y: auto;
+        }
+        .modal-content h2 { font-size: 22px; font-weight: 700; color: var(--text-bright); margin-bottom: 4px; text-align: center; }
+        .modal-content .subtitle { color: var(--text-dim); font-size: 14px; text-align: center; margin-bottom: 20px; }
+        .modal-content .close-btn {
+            margin-top: 16px; padding: 10px; border-radius: var(--radius); background: transparent;
+            border: 1px solid var(--border); color: var(--text-faint); font-weight: 600; cursor: pointer;
+            width: 100%; font-family: inherit; transition: all 0.15s;
+        }
+        .modal-content .close-btn:hover { border-color: var(--border-strong); color: var(--text); background: var(--bg-card-hover); }
+
+        .item-list { display: flex; flex-direction: column; gap: 8px; }
+        .item-list .item {
+            padding: 10px 14px; background: var(--bg-subtle); border: 1px solid var(--border);
+            border-radius: var(--radius); display: flex; justify-content: space-between; align-items: center;
+        }
+        .item-list .item .name { font-weight: 500; color: var(--text-bright); }
+        .item-list .item .type { font-size: 11px; padding: 2px 10px; border-radius: 20px; font-weight: 600; }
+        .item-list .item .type.free { background: rgba(16, 185, 129, 0.15); color: var(--success); }
+        .item-list .item .type.key { background: rgba(168, 85, 247, 0.15); color: var(--accent); }
+        .item-list .item .type.paid { background: rgba(245, 158, 11, 0.15); color: var(--warning); }
+        .item-list .item .date { font-size: 11px; color: var(--text-faint); }
+
+        .admin-menu-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); z-index: 999;
+            align-items: center; justify-content: center;
+        }
+        .admin-menu-overlay.active { display: flex; }
+        .admin-menu {
+            background: var(--bg-card); border: 1px solid var(--border-strong); border-radius: var(--radius-xl);
+            padding: 32px; max-width: 420px; width: 100%; box-shadow: var(--shadow-lg);
+        }
+        .admin-menu h2 { font-size: 22px; font-weight: 700; color: var(--text-bright); text-align: center; }
+        .admin-menu .subtitle { color: var(--text-dim); font-size: 14px; text-align: center; margin-bottom: 24px; }
+        .admin-menu .admin-items { display: flex; flex-direction: column; gap: 10px; }
+        .admin-menu .admin-item {
+            display: flex; align-items: center; gap: 14px; padding: 12px 16px; border-radius: var(--radius);
+            background: var(--bg-subtle); border: 1px solid var(--border); transition: all 0.15s;
+            cursor: pointer; text-decoration: none; color: var(--text);
+        }
+        .admin-menu .admin-item:hover { border-color: var(--accent-border); background: var(--accent-soft); transform: translateX(4px); }
+        .admin-menu .admin-item .icon {
+            width: 36px; height: 36px; border-radius: var(--radius); background: var(--accent-soft);
+            display: flex; align-items: center; justify-content: center; font-size: 16px; color: var(--accent); flex-shrink: 0;
+        }
+        .admin-menu .admin-item .info { flex: 1; }
+        .admin-menu .admin-item .info .title { font-weight: 600; font-size: 14px; color: var(--text-bright); }
+        .admin-menu .admin-item .info .desc { font-size: 12px; color: var(--text-faint); }
+        .admin-menu .admin-item .badge-notif { background: var(--error); color: #fff; border-radius: 50%; padding: 2px 8px; font-size: 11px; font-weight: 700; }
+        .admin-menu .close-btn {
+            margin-top: 16px; padding: 10px; border-radius: var(--radius); background: transparent;
+            border: 1px solid var(--border); color: var(--text-faint); font-weight: 600; cursor: pointer;
+            width: 100%; font-family: inherit; transition: all 0.15s;
+        }
+        .admin-menu .close-btn:hover { border-color: var(--border-strong); color: var(--text); background: var(--bg-card-hover); }
+
+        .logout-section {
+            margin-top: 20px; text-align: center;
+        }
+        .logout-section .btn-logout {
+            display: inline-flex; align-items: center; gap: 8px; padding: 10px 24px;
+            border-radius: var(--radius); background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.3); color: #f87171;
+            font-size: 14px; font-weight: 600; transition: all 0.15s; text-decoration: none; cursor: pointer;
+        }
+        .logout-section .btn-logout:hover { background: rgba(239, 68, 68, 0.25); }
+
+        @media (max-width: 1024px) { .profile-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) {
+            .navbar .container { flex-direction: column; align-items: stretch; }
+            .navbar .nav-links { justify-content: center; }
+            .navbar .nav-right { justify-content: center; }
+            .profile-page { padding: 16px; }
+            .profile-card { padding: 16px; }
+            .profile-buttons { flex-direction: column; }
+            .profile-buttons .btn-gradient,
+            .profile-buttons .btn-outline,
+            .profile-buttons .btn-admin { width: 100%; justify-content: center; }
+            .avatar-upload { flex-direction: column; align-items: stretch; }
+            .chat-input-area { flex-direction: column; }
+            .chat-input-area button { width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="bg-fixed">
+    <div class="bg-orb bg-orb-1"></div>
+    <div class="bg-orb bg-orb-2"></div>
+</div>
+
+<nav class="navbar">
+    <div class="container">
+        <div class="brand">Apex<span>Client</span></div>
+        <div class="nav-links">
+            <a href="https://apexdlc.site.je/"><i class="fas fa-home"></i> Главная</a>
+            <a href="https://apexdlc.site.je/shop.php"><i class="fas fa-store"></i> Магазин</a>
+            <a href="https://apexdlc.site.je/rules.php"><i class="fas fa-gavel"></i> Правила</a>
+            <a href="https://apexdlc.site.je/privacy.php"><i class="fas fa-shield-alt"></i> Соглашение</a>
+            <a href="https://apexdlc.site.je/support.php" class="active"><i class="fas fa-headset"></i> Поддержка</a>
+        </div>
+        <div class="nav-right">
+            <div class="user-info" onclick="window.location.href='/profile.php'">
+                <div class="avatar">
+                                            M                                    </div>
+                <span class="username-text">monika</span>
+            </div>
+            <a href="https://apexdlc.site.je/logout.php" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Выйти</a>
+        </div>
+    </div>
+</nav>
+
+<div class="profile-page">
+
+    <div class="profile-header">
+        <h3><i class="fa-solid fa-user"></i> Личный кабинет</h3>
+    </div>
+
+                        
+    <div class="profile-grid">
+
+        <!-- КАРТОЧКА 1: ИНФОРМАЦИЯ -->
+        <div class="profile-card">
+            <div class="profile-item">
+                <span class="label"><i class="fa-solid fa-fingerprint"></i> UID</span>
+                <span class="value">0</span>
+            </div>
+            <div class="profile-item">
+                <span class="label"><i class="fa-solid fa-tag"></i> Логин</span>
+                <span class="value">SwinGuard</span>
+            </div>
+            <div class="profile-item">
+                <span class="label"><i class="fa-solid fa-gavel"></i> Группа</span>
+                <span class="value">
+                                            Админ
+                                    </span>
+            </div>
+            <div class="profile-item">
+                <span class="label"><i class="fa-solid fa-calendar-days"></i> Дата регистрации</span>
+                <span class="value">00.0.00 00:00</span>
+            </div>
+            <div class="profile-item">
+                <span class="label"><i class="fa-solid fa-calendar-days"></i> Последний вход</span>
+                <span class="value">00.0.00 00:00</span>
+            </div>
+            <div class="profile-item">
+                <span class="label"><i class="fa-solid fa-envelope"></i> E-mail</span>
+                <span class="value">swinguard@swin.com</span>
+            </div>
+            <div class="profile-item">
+                <span class="label"><i class="fa-solid fa-computer"></i> HWID</span>
+                <span class="value">Status</span>
+            </div>
+            <div class="profile-item" style="border-bottom: none; padding-bottom: 0;">
+                <span class="label"><i class="fa-solid fa-clock"></i> Подписка</span>
+                <span class="value">
+                                            <span style="color: var(--text-faint);">
+                            <i class="fas fa-circle"></i> Status
+                        </span>
+                                    </span>
+            </div>
+        </div>
+
+        <!-- КАРТОЧКА 2: АВАТАР + АКТИВАЦИЯ КЛЮЧА + ПАРОЛЬ -->
+        <div class="profile-card">
+            <div class="profile-item" style="border-bottom: none; flex-direction: column; align-items: stretch; gap: 10px; padding-bottom: 0;">
+                <div style="display: flex; align-items: center; gap: 8px; color: var(--text-faint); font-size: 13px; font-weight: 600;">
+                    <i class="fa-solid fa-user" style="color: var(--accent);"></i> Аватар
+                </div>
+                <form method="POST" enctype="multipart/form-data" class="avatar-upload">
+                    <input type="hidden" name="action" value="upload_avatar">
+                    <div class="avatar-preview">
+                                                    M                                            </div>
+                    <input type="file" name="avatar_file" accept="image/jpeg,image/png,image/gif,image/webp">
+                    <button type="submit" class="btn-upload"><i class="fas fa-upload"></i> Загрузить</button>
+                </form>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="profile-item" style="border-bottom: none; flex-direction: column; align-items: stretch; gap: 10px; padding-bottom: 0;">
+                <div style="display: flex; align-items: center; gap: 8px; color: var(--text-faint); font-size: 13px; font-weight: 600;">
+                    <i class="fa-solid fa-key" style="color: var(--accent);"></i> Активация ключа
+                </div>
+                <form method="POST" style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                    <input type="hidden" name="action" value="activate_key">
+                    <input type="text" name="license_key" placeholder="Введите ключ" style="flex: 1; padding: 8px 12px; background: var(--bg-input); border: 1px solid var(--border); border-radius: var(--radius); font-size: 13px; color: var(--text-bright); outline: none; font-family: inherit; min-width: 100px;">
+                    <button type="submit" class="btn-gradient-sm" style="padding: 8px 16px; border-radius: var(--radius); background: var(--gradient-color); color: #fff; border: none; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; white-space: nowrap;">
+                        <i class="fa-solid fa-unlock-keyhole"></i> Активировать
+                    </button>
+                </form>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="profile-item" style="border-bottom: none; flex-direction: column; align-items: stretch; gap: 10px; padding-bottom: 0;">
+                <div style="display: flex; align-items: center; gap: 8px; color: var(--text-faint); font-size: 13px; font-weight: 600;">
+                    <i class="fa-solid fa-lock" style="color: var(--accent);"></i> Смена пароля
+                </div>
+                <form method="POST" style="display: flex; flex-direction: column; gap: 8px;">
+                    <input type="hidden" name="action" value="change_password">
+                    <input type="password" name="current_password" placeholder="Текущий пароль" style="padding: 8px 12px; background: var(--bg-input); border: 1px solid var(--border); border-radius: var(--radius); font-size: 13px; color: var(--text-bright); outline: none; font-family: inherit; width: 100%;">
+                    <input type="password" name="new_password" placeholder="Новый пароль" style="padding: 8px 12px; background: var(--bg-input); border: 1px solid var(--border); border-radius: var(--radius); font-size: 13px; color: var(--text-bright); outline: none; font-family: inherit; width: 100%;">
+                    <input type="password" name="confirm_password" placeholder="Подтверждение" style="padding: 8px 12px; background: var(--bg-input); border: 1px solid var(--border); border-radius: var(--radius); font-size: 13px; color: var(--text-bright); outline: none; font-family: inherit; width: 100%;">
+                    <button type="submit" class="btn-gradient-sm" style="padding: 10px; border-radius: var(--radius); background: var(--gradient-color); color: #fff; border: none; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; width: 100%;">
+                        <i class="fa-solid fa-pen-to-square"></i> Сменить пароль
+                    </button>
+                </form>
+            </div>
+
+                    </div>
+
+        <!-- КАРТОЧКА 3: БЫСТРЫЕ ДЕЙСТВИЯ + ОТЗЫВЫ -->
+        <div class="profile-card">
+            <div class="quick-actions-title"><i class="fas fa-bolt" style="color: var(--accent);"></i> Быстрые действия</div>
+            <div class="profile-buttons">
+                <a href="https://apexdlc.site.je/shop.php" class="btn-gradient" style="width: 100%; justify-content: center;">
+                    <i class="fa-solid fa-bag-shopping"></i> Купить клиент
+                </a>
+                <button class="btn-outline" style="width: 100%; justify-content: center;" onclick="openPromoModal()">
+                    <i class="fa-solid fa-badge-percent"></i> Мои промокоды
+                </button>
+                <button class="btn-outline" style="width: 100%; justify-content: center;" onclick="openPurchasedModal()">
+                    <i class="fa-solid fa-bag-shopping"></i> Купленные товары
+                </button>
+                <a href="https://apexdlc.site.je/download.php" class="btn-gradient" style="width: 100%; justify-content: center;">
+                    <i class="fa-solid fa-cloud-arrow-down"></i> Скачать лаунчер
+                </a>
+                <form method="POST" style="width: 100%;">
+                    <input type="hidden" name="action" value="change_password">
+                    <button type="submit" class="btn-gradient" style="width: 100%; justify-content: center; background: var(--gradient-color); color: #fff; border: none; padding: 10px; border-radius: var(--radius); font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; display: inline-flex; align-items: center; gap: 8px;">
+                        <i class="fa-solid fa-pen-to-square"></i> Сменить пароль
+                    </button>
+                </form>
+            </div>
+
+            <!-- ===== ОТЗЫВЫ ВНУТРИ БЫСТРЫХ ДЕЙСТВИЙ ===== -->
+            <div class="reviews-inline">
+                <div class="review-title">
+                    <i class="fa-solid fa-star"></i> Мои отзывы
+                                    </div>
+
+                <!-- Форма отзыва -->
+                <div class="review-form-inline">
+                    <form method="POST" id="reviewForm">
+                        <input type="hidden" name="action" value="add_review">
+                        <div class="stars-input" id="starsInput">
+                                                            <button type="button" data-value="1" class="active">
+                                    <i class="fas fa-star"></i>
+                                </button>
+                                                            <button type="button" data-value="2" class="active">
+                                    <i class="fas fa-star"></i>
+                                </button>
+                                                            <button type="button" data-value="3" class="active">
+                                    <i class="fas fa-star"></i>
+                                </button>
+                                                            <button type="button" data-value="4" class="active">
+                                    <i class="fas fa-star"></i>
+                                </button>
+                                                            <button type="button" data-value="5" class="active">
+                                    <i class="fas fa-star"></i>
+                                </button>
+                                                    </div>
+                        <input type="hidden" name="rating" id="ratingValue" value="5">
+                        <textarea name="comment" placeholder="Напишите отзыв (мин. 10 символов)..."></textarea>
+                        <div class="rf-actions">
+                            <button type="submit" class="btn-submit">
+                                <i class="fas fa-pen"></i> Оставить                            </button>
+                                                    </div>
+                                            </form>
+                                    </div>
+
+                <!-- Список СВОИХ опубликованных отзывов -->
+                                    <div class="review-empty-inline">
+                        <i class="fas fa-inbox" style="display: block; font-size: 18px; margin-bottom: 4px;"></i>
+                        У вас пока нет отзывов
+                    </div>
+                            </div>
+        </div>
+
+    </div>
+
+    <!-- ===== ВЫЙТИ С АККАУНТА ===== -->
+    <div class="logout-section">
+        <a href="https://apexdlc.site.je/logout.php" class="btn-logout">
+            <i class="fa-solid fa-right-from-bracket"></i> Выйти с аккаунта
+        </a>
+    </div>
+
+    <!-- ===== ЧАТ ===== -->
+    <div class="chat-container">
+        <div class="chat-title">
+            <i class="fa-solid fa-comments"></i> Общий чат
+            <span style="font-size: 10px; color: var(--text-faint); font-weight: 400; margin-left: auto;">Все пользователи</span>
+                            <span style="font-size: 9px; color: var(--text-faint); font-weight: 400;">(спам-фильтр: 3 одинаковых сообщения = блок 5 мин)</span>
+                    </div>
+        <div class="chat-messages" id="chatMessages">
+            <div style="text-align: center; color: var(--text-faint); padding: 12px; font-size: 12px;">Загрузка сообщений...</div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chatInput" placeholder="Введите сообщение..." maxlength="500">
+            <button id="chatSendBtn"><i class="fa-solid fa-paper-plane"></i> Отправить</button>
+        </div>
+        <div class="chat-cooldown-warning" id="chatCooldownWarning">
+            <i class="fas fa-clock"></i> Вы заблокированы в чате за спам!
+        </div>
+    </div>
+
+</div>
+
+<!-- МОДАЛКИ -->
+<div class="modal-overlay" id="promoModal">
+    <div class="modal-content">
+        <h2><i class="fa-solid fa-badge-percent" style="color: var(--accent);"></i> Мои промокоды</h2>
+        <p class="subtitle">Ваши активные промокоды</p>
+        <div style="text-align: center; padding: 30px 20px;">
+            <i class="fa-solid fa-ticket" style="font-size: 48px; color: var(--text-muted); margin-bottom: 12px; display: block;"></i>
+            <p style="color: var(--text-dim); font-size: 16px;">У вас нету промокодов!</p>
+        </div>
+        <button class="close-btn" onclick="closePromoModal()">Закрыть</button>
+    </div>
+</div>
+
+<div class="modal-overlay" id="purchasedModal">
+    <div class="modal-content">
+        <h2><i class="fa-solid fa-bag-shopping" style="color: var(--accent);"></i> Купленные товары</h2>
+        <p class="subtitle">Все ваши приобретения</p>
+        <div class="item-list">
+                            <div class="item">
+                    <span class="name">Free Версия</span>
+                    <div>
+                        <span class="type free">
+                                                            <i class="fas fa-gem"></i> Free
+                                                    </span>
+                        <span class="date">18.07.2026</span>
+                    </div>
+                </div>
+                    </div>
+        <button class="close-btn" onclick="closePurchasedModal()">Закрыть</button>
+    </div>
+</div>
+
+<!-- АДМИН МЕНЮ -->
+<div class="admin-menu-overlay" id="adminMenu">
+    <div class="admin-menu">
+        <h2>Админ Часть</h2>
+        <p class="subtitle">Выберите раздел для управления</p>
+        <div class="admin-items">
+            <a href="https://apexdlc.site.je/notifications.php" class="admin-item">
+                <div class="icon"><i class="fas fa-bell"></i></div>
+                <div class="info">
+                    <div class="title">Уведомления</div>
+                    <div class="desc">Просмотр уведомлений</div>
+                </div>
+                            </a>
+            <a href="https://apexdlc.site.je/admin.php" class="admin-item">
+                <div class="icon"><i class="fas fa-database"></i></div>
+                <div class="info">
+                    <div class="title">Админ Панель</div>
+                    <div class="desc">Управление сайтом</div>
+                </div>
+            </a>
+            <a href="https://apexdlc.site.je/admin2.php" class="admin-item">
+                <div class="icon"><i class="fas fa-cog"></i></div>
+                <div class="info">
+                    <div class="title">Админ Панель Лаунчера</div>
+                    <div class="desc">Управление лаунчером</div>
+                </div>
+            </a>
+            <a href="https://apexdlc.site.je/supporthelp.php" class="admin-item">
+                <div class="icon"><i class="fas fa-ticket-alt"></i></div>
+                <div class="info">
+                    <div class="title">Админ Тикеты</div>
+                    <div class="desc">Управление тикетами</div>
+                </div>
+            </a>
+            <a href="https://apexdlc.site.je/moderate_reviews.php" class="admin-item">
+                <div class="icon"><i class="fas fa-star"></i></div>
+                <div class="info">
+                    <div class="title">Модерация отзывов</div>
+                    <div class="desc">Управление отзывами</div>
+                </div>
+                            </a>
+            <!-- КНОПКА ОЧИСТКИ ЧАТА -->
+            <a href="#" class="admin-item" onclick="clearChat()" style="border-color: rgba(239,68,68,0.3);">
+                <div class="icon" style="background: rgba(239,68,68,0.15); color: #f87171;">
+                    <i class="fas fa-trash-alt"></i>
+                </div>
+                <div class="info">
+                    <div class="title" style="color: #f87171;">Очистить чат</div>
+                    <div class="desc">Удалить все сообщения в чате</div>
+                </div>
+            </a>
+        </div>
+        <button class="close-btn" onclick="closeAdminMenu()">Закрыть</button>
+    </div>
+</div>
+
+<script>
+// ===== МОДАЛКИ =====
+function openPromoModal() {
+    document.getElementById('promoModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+function closePromoModal() {
+    document.getElementById('promoModal').classList.remove('active');
+    document.body.style.overflow = '';
+}
+function openPurchasedModal() {
+    document.getElementById('purchasedModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+function closePurchasedModal() {
+    document.getElementById('purchasedModal').classList.remove('active');
+    document.body.style.overflow = '';
+}
+function openAdminMenu() {
+    document.getElementById('adminMenu').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+function closeAdminMenu() {
+    document.getElementById('adminMenu').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// ===== ОЧИСТКА ЧАТА =====
+function clearChat() {
+    if (!confirm('⚠️ Вы уверены, что хотите очистить весь чат?')) return;
+    if (!confirm('Все сообщения будут удалены безвозвратно! Продолжить?')) return;
+    
+    fetch(window.location.pathname, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'action=clear_chat'
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('✅ Чат успешно очищен!');
+            document.getElementById('chatMessages').innerHTML = '<div style="text-align: center; color: var(--text-faint); padding: 12px; font-size: 12px;">Чат очищен администратором</div>';
+            chatLastId = 0;
+        } else {
+            alert('❌ Ошибка очистки чата');
+        }
+    })
+    .catch(() => alert('❌ Ошибка соединения с сервером'));
+}
+
+document.querySelectorAll('.modal-overlay, .admin-menu-overlay').forEach(el => {
+    el.addEventListener('click', function(e) {
+        if (e.target === this) {
+            this.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+});
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-overlay.active, .admin-menu-overlay.active').forEach(el => {
+            el.classList.remove('active');
+        });
+        document.body.style.overflow = '';
+    }
+});
+
+// ===== ОТЗЫВЫ: ЗВЁЗДЫ =====
+document.addEventListener('DOMContentLoaded', function() {
+    const starsContainer = document.getElementById('starsInput');
+    const ratingInput = document.getElementById('ratingValue');
+    
+    if (starsContainer) {
+        const stars = starsContainer.querySelectorAll('button');
+        stars.forEach(star => {
+            star.addEventListener('click', function() {
+                const value = parseInt(this.dataset.value);
+                ratingInput.value = value;
+                stars.forEach(s => {
+                    s.classList.toggle('active', parseInt(s.dataset.value) <= value);
+                });
+            });
+            star.addEventListener('mouseenter', function() {
+                const value = parseInt(this.dataset.value);
+                stars.forEach(s => {
+                    s.classList.toggle('active', parseInt(s.dataset.value) <= value);
+                });
+            });
+        });
+        starsContainer.addEventListener('mouseleave', function() {
+            const currentValue = parseInt(ratingInput.value) || 0;
+            stars.forEach(s => {
+                s.classList.toggle('active', parseInt(s.dataset.value) <= currentValue);
+            });
+        });
+    }
+});
+
+// ===== ЧАТ =====
+let chatLastId = 0;
+let chatInterval = null;
+
+function loadChatMessages() {
+    const container = document.getElementById('chatMessages');
+    
+    fetch(window.location.pathname, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'chat_action=get&last_id=' + chatLastId
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success && data.messages.length > 0) {
+            if (chatLastId === 0) container.innerHTML = '';
+            data.messages.forEach(msg => {
+                const div = document.createElement('div');
+                div.className = 'chat-message';
+                const isAdmin = msg.role === 'admin';
+                
+                let avatarContent = msg.username ? msg.username.charAt(0).toUpperCase() : 'U';
+                if (msg.avatar_url && msg.avatar_url !== 'NULL' && msg.avatar_url !== '') {
+                    avatarContent = `<img src="/uploads/avatars/${msg.avatar_url}" alt="avatar">`;
+                }
+                
+                let roleClass = 'user-role';
+                let roleText = 'Пользователь';
+                let usernameClass = '';
+                if (isAdmin) {
+                    roleClass = 'admin-role';
+                    roleText = 'Админ';
+                    usernameClass = 'admin';
+                }
+                
+                div.innerHTML = `
+                    <div class="msg-avatar">${avatarContent}</div>
+                    <div class="msg-body">
+                        <div class="msg-header">
+                            <span class="msg-username ${usernameClass}">${msg.username || 'Пользователь'}</span>
+                            <span class="msg-role ${roleClass}">${roleText}</span>
+                            <span class="msg-time">${msg.time || 'Только что'}</span>
+                        </div>
+                        <div class="msg-text">${msg.message}</div>
+                    </div>
+                `;
+                container.appendChild(div);
+                chatLastId = Math.max(chatLastId, msg.id);
+            });
+            container.scrollTop = container.scrollHeight;
+        }
+    })
+    .catch((err) => {
+        console.error('Ошибка загрузки чата:', err);
+    });
+}
+
+function sendChatMessage() {
+    const input = document.getElementById('chatInput');
+    const message = input.value.trim();
+    if (!message) {
+        alert('Введите сообщение');
+        return;
+    }
+    
+    const btn = document.getElementById('chatSendBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+    
+    fetch(window.location.pathname, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'chat_action=send&message=' + encodeURIComponent(message)
+    })
+    .then(response => response.json())
+    .then(data => {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Отправить';
+        if (data.success) {
+            input.value = '';
+            loadChatMessages();
+            document.getElementById('chatCooldownWarning').classList.remove('active');
+        } else {
+            if (data.error && (data.error.includes('заблокированы') || data.error.includes('Спам'))) {
+                document.getElementById('chatCooldownWarning').textContent = '⛔ ' + data.error;
+                document.getElementById('chatCooldownWarning').classList.add('active');
+                input.disabled = true;
+                btn.disabled = true;
+                setTimeout(() => {
+                    input.disabled = false;
+                    btn.disabled = false;
+                    document.getElementById('chatCooldownWarning').classList.remove('active');
+                }, 300000);
+            } else {
+                alert(data.error || 'Ошибка отправки');
+            }
+        }
+    })
+    .catch((err) => {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Отправить';
+        console.error('Ошибка отправки:', err);
+        alert('Ошибка соединения с сервером. Попробуйте позже.');
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    loadChatMessages();
+    chatInterval = setInterval(loadChatMessages, 3000);
+    
+    const input = document.getElementById('chatInput');
+    const sendBtn = document.getElementById('chatSendBtn');
+    
+    input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && !this.disabled) {
+            e.preventDefault();
+            sendChatMessage();
+        }
+    });
+    
+    sendBtn.addEventListener('click', function() {
+        if (!input.disabled) sendChatMessage();
+    });
+});
+
+// Защита
+document.addEventListener('contextmenu', function(e) { e.preventDefault(); return false; });
+document.addEventListener('selectstart', function(e) { e.preventDefault(); return false; });
+document.addEventListener('copy', function(e) { e.preventDefault(); return false; });
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'F12' || e.keyCode === 123) { e.preventDefault(); return false; }
+    if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j' || e.key === 'C' || e.key === 'c')) { e.preventDefault(); return false; }
+    if (e.ctrlKey && (e.key === 'U' || e.key === 'u' || e.key === 'S' || e.key === 's' || e.key === 'P' || e.key === 'p')) { e.preventDefault(); return false; }
+});
+</script>
+
+
+</body></html>
