@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="description" content="Apex Client - Твой уникальный геймплей начинается здесь">
+    <meta name="theme-color" content="#0a0a0a">
+    <title>Apex Client — Чит Клиент для Minecraft</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Instrument+Sans:wght@500;600;700&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+
+<div class="bg-fixed">
+    <div class="bg-orb bg-orb-1"></div>
+    <div class="bg-orb bg-orb-2"></div>
+    <div class="bg-orb bg-orb-3"></div>
+</div>
+
+<!-- Top Bar с логотипом -->
+<header class="topbar">
+    <div class="left">
+        <div class="logo">
+            <img src="/images/logo.png" alt="Apex">
+        </div>
+        <span class="brand">Apex</span>
+        <span class="sep">/</span>
+        <span class="location">Главная</span>
+    </div>
+    <div class="center">
+        <a href="/" class="active"><i class="fas fa-home"></i> Главная</a>
+        <a href="/shop.html"><i class="fas fa-store"></i> Магазин</a>
+        <a href="/rules.html"><i class="fas fa-gavel"></i> Правила</a>
+        <a href="/privacy.html"><i class="fas fa-shield-alt"></i> Соглашение</a>
+        <a href="/support.html"><i class="fas fa-headset"></i> Поддержка</a>
+        <a href="/profile.html"><i class="fas fa-user"></i> Профиль</a>
+            </div>
+    <div class="right">
+                    <a href="/login.html" class="btn-auth login"><i class="fas fa-sign-in-alt"></i> Войти</a>
+            <a href="/register.html" class="btn-auth register"><i class="fas fa-user-plus"></i> Регистрация</a>
+            </div>
+</header>
+
+<main>
+    <!-- HERO с логотипом -->
+    <section class="home-hero">
+        <div class="home-hero-inner">
+            <div class="home-hero-logo-wrap animate-scale-in animate-delay-1">
+                <img src="/images/logo.png" alt="Apex Client">
+            </div>
+            <h1 class="home-hero-title animate-fade-in-up-blur animate-delay-2">
+                Apex Client — <span>максимум<br>возможностей</span>, минимум усилий.
+            </h1>
+            <p class="home-hero-description animate-fade-in-up-blur animate-delay-3">
+                Мощный клиент для Minecraft, который помогает чувствовать себя увереннее, действовать точнее и удерживать полный контроль над игрой за счёт продуманного набора возможностей.
+            </p>
+            <div class="home-hero-actions animate-fade-in-up animate-delay-4">
+                                    <a href="/login.html"><button class="home-hero-btn home-hero-btn--primary"><i class="fas fa-sign-in-alt"></i> Авторизация</button></a>
+                                <a href="/shop.html"><button class="home-hero-btn home-hero-btn--secondary"><i class="fas fa-shopping-cart"></i> Магазин</button></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- HIGHLIGHTS -->
+    <section class="home-highlights">
+        <div class="home-highlights-grid">
+            <article class="home-highlight-card animate-fade-in-up animate-delay-1">
+                <span class="home-highlight-card-figure">01</span>
+                <div class="home-highlight-card-visual">
+                    <i class="fas fa-palette"></i>
+                </div>
+                <div class="home-highlight-card-body">
+                    <h3 class="home-highlight-card-title">Красивый внешний вид</h3>
+                    <p class="home-highlight-card-description">Продуманные визуальные функции и аккуратная стилистика делают интерфейс приятным, читаемым и по-настоящему современным.</p>
+                </div>
+            </article>
+            <article class="home-highlight-card animate-fade-in-up animate-delay-2">
+                <span class="home-highlight-card-figure">02</span>
+                <div class="home-highlight-card-visual">
+                    <i class="fas fa-sliders-h"></i>
+                </div>
+                <div class="home-highlight-card-body">
+                    <h3 class="home-highlight-card-title">Простая настройка</h3>
+                    <p class="home-highlight-card-description">Клиент легко подстраивается под твой стиль игры: от базовых параметров до готовых конфигов для быстрого старта.</p>
+                </div>
+            </article>
+            <article class="home-highlight-card animate-fade-in-up animate-delay-3">
+                <span class="home-highlight-card-figure">03</span>
+                <div class="home-highlight-card-visual">
+                    <i class="fas fa-sync-alt"></i>
+                </div>
+                <div class="home-highlight-card-body">
+                    <h3 class="home-highlight-card-title">Регулярные обновления</h3>
+                    <p class="home-highlight-card-description">Функционал постоянно развивается: мы добавляем новые возможности, улучшаем старые и поддерживаем актуальность клиента.</p>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="home-stats">
+        <div class="home-stats-grid">
+            <div class="home-stats-card animate-scale-in animate-delay-1">
+                <div class="home-stats-card-header">
+                    <span class="home-stats-card-title"><i class="fas fa-play"></i> Всего запусков</span>
+                </div>
+                <div class="home-stats-card-value" id="launchesCount">209</div>
+                <div class="home-stats-card-description">Через наш лаунчер</div>
+            </div>
+            <div class="home-stats-card animate-scale-in animate-delay-2">
+                <div class="home-stats-card-header">
+                    <span class="home-stats-card-title"><i class="fas fa-clock"></i> На рынке</span>
+                </div>
+                <div class="home-stats-card-value">2 месяца, 4 дня</div>
+                <div class="home-stats-card-description">Успешной работы</div>
+            </div>
+            <div class="home-stats-card animate-scale-in animate-delay-3">
+                <div class="home-stats-card-header">
+                    <span class="home-stats-card-title"><i class="fas fa-users"></i> Пользователей</span>
+                </div>
+                <div class="home-stats-card-value">52</div>
+                <div class="home-stats-card-description">Довольных клиентов</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- REVIEWS (только ОДОБРЕННЫЕ из БД) -->
+    <section class="home-reviews" id="reviews">
+        <div class="home-reviews-title">
+            <h2>Что говорят <span>пользователи</span></h2>
+            <p>Реальные отзывы наших клиентов</p>
+                    </div>
+
+        <div class="reviews-carousel" id="reviewsCarousel">
+            <div class="reviews-track" id="reviewsTrack" style="transition: none; transform: translateX(0px);">
+                                                            <div class="review-item active" data-index="0">
+                            <div class="inner">
+                                <div class="header">
+                                    <div class="avatar">
+                                                                                    L                                                                            </div>
+                                    <div class="info">
+                                        <div class="name">L1mas</div>
+                                        <div class="stars">
+                                                                                             <i class="fas fa-star"></i>
+                                                                                             <i class="fas fa-star"></i>
+                                                                                             <i class="fas fa-star"></i>
+                                                                                             <i class="fas fa-star"></i>
+                                                                                             <i class="fas fa-star"></i>
+                                                                                    </div>
+                                    </div>
+                                </div>
+                                <div class="comment">норм</div>
+                                <div class="footer">
+                                    <i class="far fa-calendar"></i> 13.07.2026                                </div>
+                            </div>
+                        </div>
+                                            <div class="review-item " data-index="1">
+                            <div class="inner">
+                                <div class="header">
+                                    <div class="avatar">
+                                                                                    L                                                                            </div>
+                                    <div class="info">
+                                        <div class="name">LumaWave</div>
+                                        <div class="stars">
+                                                                                             <i class="fas fa-star"></i>
+                                                                                             <i class="fas fa-star"></i>
+                                                                                             <i class="fas fa-star"></i>
+                                                                                             <i class="fas fa-star"></i>
+                                                                                             <i class="fas fa-star"></i>
+                                                                                    </div>
+                                    </div>
+                                </div>
+                                <div class="comment">Лучший чит в мире!!!!! никогда круче не видел</div>
+                                <div class="footer">
+                                    <i class="far fa-calendar"></i> 13.07.2026                                </div>
+                            </div>
+                        </div>
+                                            <div class="review-item " data-index="2">
+                            <div class="inner">
+                                <div class="header">
+                                    <div class="avatar">
+                                                                                    C                                                                            </div>
+                                    <div class="info">
+                                        <div class="name">crawl</div>
+                                        <div class="stars">
+                                                                                             <i class="fas fa-star"></i>
+                                                                                             <i class="fas fa-star"></i>
+                                                                                             <i class="fas fa-star"></i>
+                                                                                             <i class="fas fa-star"></i>
+                                                                                             <i class="fas fa-star"></i>
+                                                                                    </div>
+                                    </div>
+                                </div>
+                                <div class="comment">лучший чит!!!</div>
+                                <div class="footer">
+                                    <i class="far fa-calendar"></i> 13.07.2026                                </div>
+                            </div>
+                        </div>
+                                            <div class="review-item " data-index="3">
+                            <div class="inner">
+                                <div class="header">
+                                    <div class="avatar">
+                                                                                    <img src="/uploads/avatars/avatar_6767_1784060366.jpg" alt="">
+                                                                            </div>
+                                    <div class="info">
+                                        <div class="name">m1sckaz</div>
+                                        <div class="stars">
+                                                                                             <i class="fas fa-star"></i>
+                                                                                             <i class="fas fa-star"></i>
+                                                                                             <i class="fas fa-star"></i>
+                                                                                             <i class="fas fa-star"></i>
+                                                                                             <i class="fas fa-star"></i>
+                                                                                    </div>
+                                    </div>
+                                </div>
+                                <div class="comment">мба чит советую всем</div>
+                                <div class="footer">
+                                    <i class="far fa-calendar"></i> 13.07.2026                                </div>
+                            </div>
+                        </div>
+                                                </div>
+        </div>
+
+        <div class="reviews-dots" id="reviewsDots">
+                                                <button class="dot active" data-index="0" onclick="goToReview(0)"></button>
+                                    <button class="dot " data-index="1" onclick="goToReview(1)"></button>
+                                    <button class="dot " data-index="2" onclick="goToReview(2)"></button>
+                                    <button class="dot " data-index="3" onclick="goToReview(3)"></button>
+                                    </div>
+    </section>
+
+    <!-- COMMUNITY -->
+    <section class="home-community">
+        <div class="home-community-title">
+            <h2>Клиент, которому <span>доверяют</span></h2>
+            <p>За проектом стоят не только слова, но и цифры</p>
+        </div>
+        <div class="home-community-grid">
+            <div class="home-community-card animate-scale-in animate-delay-1">
+                <div class="home-community-card-header">
+                    <i class="fas fa-user-friends"></i>
+                    <h3>Пользователи</h3>
+                </div>
+                <div class="home-community-card-value">52+</div>
+                <div class="home-community-card-text">Клиент выбирают за удобство, стабильную работу и ощущение контроля в каждой игровой сессии.</div>
+            </div>
+            <div class="home-community-card animate-scale-in animate-delay-2">
+                <div class="home-community-card-header">
+                    <i class="fas fa-code-branch"></i>
+                    <h3>Версии</h3>
+                </div>
+                <div class="home-community-card-value">1+</div>
+                <div class="home-community-card-text">Доступных версий Minecraft для запуска</div>
+            </div>
+            <div class="home-community-card animate-scale-in animate-delay-3">
+                <div class="home-community-card-header">
+                    <i class="fas fa-rocket"></i>
+                    <h3>Запуски</h3>
+                </div>
+                <div class="home-community-card-value">209+</div>
+                <div class="home-community-card-text">Каждый запуск собран так, чтобы клиент ощущался быстро, чисто и предсказуемо.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VIDEO -->
+    <section class="home-video">
+        <h2>Демонстрация <span>клиента</span></h2>
+        <p>Приглашаем вас посмотреть короткий видеообзор нашего клиента</p>
+        <div class="video-wrapper animate-scale-in animate-delay-3">
+            <iframe width="100%" height="520" src="https://www.youtube.com/embed/JTwLVmrfFoU" title="Обзор клиента" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen=""></iframe>
+        </div>
+    </section>
+</main>
+
+<!-- FOOTER с логотипом -->
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-main">
+            <div class="footer-brand">
+                <div class="footer-brand-heading">
+                    <img src="/images/logo.png" alt="Apex Client">
+                    <div class="footer-title">Apex Client</div>
+                </div>
+                <p class="footer-tagline">Apex client для уверенной и стабильной игры.</p>
+            </div>
+            <div class="footer-column">
+                <div class="footer-column-title">Платформа</div>
+                                    <a href="/register.html" class="footer-link"><i class="fas fa-user-plus"></i> Создать аккаунт</a>
+                    <a href="/login.html" class="footer-link"><i class="fas fa-sign-in-alt"></i> Войти в аккаунт</a>
+                            </div>
+            <div class="footer-column">
+                <div class="footer-column-title">Навигация</div>
+                <a href="/shop.html" class="footer-link"><i class="fas fa-store"></i> Магазин</a>
+                <a href="/rules.html" class="footer-link"><i class="fas fa-gavel"></i> Правила</a>
+                <a href="/privacy.html" class="footer-link"><i class="fas fa-shield-alt"></i> Соглашение</a>
+            </div>
+            <div class="footer-column">
+                <div class="footer-column-title">Контакты</div>
+                <a href="https://discord.gg/FH3DND8Shj" target="_blank" class="footer-link"><i class="fab fa-discord"></i> Discord</a>
+                <a href="https://t.me/apex_client" target="_blank" class="footer-link"><i class="fab fa-telegram"></i> Telegram</a>
+                <a href="https://www.youtube.com/@apexclient" target="_blank" class="footer-link"><i class="fab fa-youtube"></i> YouTube</a>
+            </div>
+        </div>
+        <div class="footer-divider"></div>
+        <div class="footer-bottom">
+            <div class="footer-copyright">© 2026 Apex Client. Все права защищены.</div>
+            <div class="footer-bottom-center">
+                <a class="footer-support-mail" href="mailto:support@apex.com"><i class="fas fa-envelope"></i> support@apex.com</a>
+                <p class="footer-legal-meta">Наш продукт не связан с компаниями Mojang и Microsoft и не аффилирован с ними.</p>
+                <p class="footer-disclaimer">Apex Client — это независимый проект, созданный для улучшения игрового опыта.</p>
+            </div>
+            <div class="footer-socials">
+                <a href="https://www.youtube.com/@apexclient" target="_blank" class="footer-social-link"><i class="fab fa-youtube"></i></a>
+                <a href="https://t.me/apex_client" target="_blank" class="footer-social-link"><i class="fab fa-telegram"></i></a>
+                <a href="https://discord.gg/FH3DND8Shj" target="_blank" class="footer-social-link"><i class="fab fa-discord"></i></a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="js/index.js"></script>
+<script src="js/common.js"></script>
+
+</body>
+</html>
